@@ -5,7 +5,7 @@ const HAND_CHOICES = ["rock", "paper", "scissors"];
 game();
 
 function computerPlay() {
-    return HAND_CHOICES[Math.floor(Math.random()*HAND_CHOICES.length)];
+    return HAND_CHOICES[randomNumber(0, HAND_CHOICES.length-1)];
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -18,7 +18,9 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection == computerSelection) {
         return 0;
     } else {
-        let playerWin = (playerSelection == "rock" && computerSelection == "scissors") || (playerSelection == "paper" && computerSelection == "rock") || (playerSelection == "scissors" && computerSelection == "paper");
+        let playerWin = (playerSelection == "rock" && computerSelection == "scissors") || 
+                (playerSelection == "paper" && computerSelection == "rock") || 
+                (playerSelection == "scissors" && computerSelection == "paper");
         
         return (playerWin) ? 1 : -1;
     }
@@ -63,4 +65,8 @@ function game() {
 
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
