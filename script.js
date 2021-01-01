@@ -2,7 +2,38 @@
 
 const HAND_CHOICES = ["rock", "paper", "scissors"];
 
-game();
+const buttons = document.querySelectorAll("button");
+const playerSelection = document.querySelector("#player-selection");
+const computerSelection = document.querySelector("#computer-selection");
+const result = document.querySelector("#result");
+const playerScoreText = document.querySelector("#player-score");
+const computerScoreText = document.querySelector("#computer-score");
+const finalMessage = document.querySelector("#final-message");
+
+let playerScore = 0, computerScore = 0;
+
+buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        let playerSelection = btn.id;
+        let computerSelection = computerPlay();
+        let roundResult = playRound(playerSelection, computerSelection);
+        
+        switch (roundResult) {
+            case 1:
+                playerScore++;
+                break;
+            case 0:
+                break;
+            case -1:
+                computerScore++;
+                break;
+        }
+
+        displayRoundResult(roundResult, playerSelection, computerSelection);
+
+        if (checkForWinner()) endGame();
+    });
+});
 
 function computerPlay() {
     return HAND_CHOICES[randomNumber(0, HAND_CHOICES.length-1)];
@@ -12,54 +43,56 @@ function playRound(playerSelection, computerSelection) {
     /* 
     Return Values
         1 - Player win
-        0 - Tie
+        0 - Draw
        -1 - Player lose
     */
     if (playerSelection == computerSelection) {
         return 0;
-    } else {
-        let playerWin = (playerSelection == "rock" && computerSelection == "scissors") || 
-                (playerSelection == "paper" && computerSelection == "rock") || 
-                (playerSelection == "scissors" && computerSelection == "paper");
-        
-        return (playerWin) ? 1 : -1;
     }
+
+    let playerWin = (playerSelection == "rock" && computerSelection == "scissors") || 
+            (playerSelection == "paper" && computerSelection == "rock") || 
+            (playerSelection == "scissors" && computerSelection == "paper");
+    
+    if (playerWin) return 1;
+    return -1;
 }
 
-function game() {
-    let playerPoints = 0, computerPoints = 0;
-    let playerSelection, computerSelection;
-    let roundResult;
-
-    for (let i = 0; i < 5; i++) {
-        playerSelection = prompt("Enter your choice: ").toLowerCase();
-        computerSelection = computerPlay();
-
-        roundResult = playRound(playerSelection, computerSelection);
-
-        switch (roundResult) {
-            case 1:
-                console.log(`You win! ${capitalize(playerSelection)} beats ${computerSelection}.`);
-                playerPoints++;
-                break;
-            case 0:
-                console.log(`It's a tie! ${capitalize(playerSelection)} vs. ${computerSelection}.`);
-                break;
-            case -1:
-                console.log(`You lose! ${capitalize(playerSelection)} lost to ${computerSelection}.`);
-                computerPoints++;
-                break;
-        }
-
-        console.log(`Current Points: You - ${playerPoints}; Computer = ${computerPoints}`);
+function displayRoundResult(roundResult, newPlayerSelection, newComputerSelection) {
+    switch (roundResult) {
+        case 1:
+            result.textContent = `You win! ${capitalize(newPlayerSelection)} beats ${newComputerSelection}.`;
+            break;
+        case 0:
+            result.textContent = `It's a draw! ${capitalize(newPlayerSelection)} vs. ${newComputerSelection}.`;
+            break;
+        case -1:
+            result.textContent = `You lose! ${capitalize(newPlayerSelection)} lost to ${newComputerSelection}.`;
+            break;
     }
 
-    if (playerPoints > computerPoints) {
-        console.log("CONGRATULATIONS! You Won!");
-    } else if (playerPoints == computerPoints) {
-        console.log("A tie! A good job nonetheless!");
+    playerSelection.textContent = capitalize(newPlayerSelection);
+    computerSelection.textContent = capitalize(newComputerSelection);
+    playerScoreText.textContent = playerScore;
+    computerScoreText.textContent = computerScore;
+}
+
+function checkForWinner() {
+    if (playerScore == 5 || computerScore == 5) {
+        return true;
+    }
+    return false
+}
+
+function endGame() {
+    buttons.forEach((btn) => btn.remove());
+
+    if (playerScore > computerScore) {
+        finalMessage.textContent = "CONGRATULATIONS! You Won!";
+    } else if (playerScore == computerScore) {
+        finalMessage.textContent = "A tie! A good job nonetheless!";
     } else {
-        console.log("Sad to say, you lost! Better luck next time!");
+        finalMessage.textContent = "Sad to say, you lost! Better luck next time!";
     }
 }
 
