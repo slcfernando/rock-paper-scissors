@@ -5,10 +5,10 @@ const HAND_CHOICES = ["rock", "paper", "scissors"];
 const buttons = document.querySelectorAll("button");
 const playerSelection = document.querySelector("#player-selection");
 const computerSelection = document.querySelector("#computer-selection");
-const result = document.querySelector("#result");
+const result = document.querySelector("#result span");
 const playerScoreText = document.querySelector("#player-score");
 const computerScoreText = document.querySelector("#computer-score");
-const finalMessage = document.querySelector("#final-message");
+const finalMessage = document.querySelector("#final-message span");
 
 let playerScore = 0, computerScore = 0;
 
@@ -94,6 +94,8 @@ function endGame() {
     } else {
         finalMessage.textContent = "Sad to say, you lost! Better luck next time!";
     }
+
+    finalMessage.parentNode.style.display = "grid";
 }
 
 function capitalize(str) {

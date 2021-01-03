@@ -4,16 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
 </head>
 <body>
-    <section>
-        <p>YOUR MOVE: <span id="player-selection"></span></p>
-        <p>COMP MOVE: <span id="computer-selection"></span></p>
-        <p id="result">Ready to Play!</p>
-        <p>YOUR SCORE: <span id="player-score">0</span></p>
-        <p>COMP SCORE: <span id="computer-score">0</span></p>
-        <p id="final-message"></p>
-    </section>
+    <p class="text-center card move">
+        <span class="score" id="player-score">0</span>
+        <span class="move-selection" id="player-selection"></span>
+        <span class="move-label">YOUR MOVE</span>
+    </p>
+    <p class="text-center" id="vs"><span>vs.</span></p>
+    <p class="text-center card move">
+        <span class="score" id="computer-score">0</span>
+        <span class="move-selection" id="computer-selection"></span>
+        <span class="move-label">COMP MOVE</span>
+    </p>
+    <p class="text-center" id="result"><span>Ready to Play!</span></p>
+    <p class="card text-center" id="final-message"><span></span></p>
     <button id="rock" type="button">Rock</button>
     <button id="paper" type="button">Paper</button>
     <button id="scissors" type="button">Scissors</button>
